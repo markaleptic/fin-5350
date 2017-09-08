@@ -17,7 +17,7 @@ def main():
   if (len(potentialSolutions) > 0):
     print ("The maxium number of McNuggets you cannot purchase with %d, %d, and %d McNuggets per purchase is %s" % (nuggetVarOne, nuggetVarTwo, nuggetVarThree, potentialSolutions[len(potentialSolutions)-1]))
   else:
-    print("sucks bitch, didn't work")
+    print("There was an error. Please try again.")
 
 def findNuggets(remainder):
   nuggetVarOne    = remainder - CONST_NUGGET_ONE
