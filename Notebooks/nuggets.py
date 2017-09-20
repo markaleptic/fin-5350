@@ -7,7 +7,6 @@ CONST_NUGGET_THR = nuggetVarThree
 
 potentialSolutions = []
 
-
 def main():
   maxCount = 1000 
   for x in range(1, maxCount):
@@ -15,7 +14,7 @@ def main():
       potentialSolutions.append(str(x))
 
   if (len(potentialSolutions) > 0):
-    print ("The maxium number of McNuggets you cannot purchase with %d, %d, and %d McNuggets per purchase is %s" % (nuggetVarOne, nuggetVarTwo, nuggetVarThree, potentialSolutions[len(potentialSolutions)-1]))
+    print ("The maxium number of McNuggets you cannot purchase with %d, %d, and %d McNuggets per purchase is %s" % (nuggetVarOne, nuggetVarTwo, nuggetVarThree, potentialSolutions[-1]))
   else:
     print("There was an error. Please try again.")
 
