@@ -28,8 +28,7 @@ Each card is constructed from a Card base class, which encapsulates a face and w
 an instance of Red or Black, which enacapsulates card color. These inherit from the Card base class. The suit 
 classes inherit from their requesite color class and, thus, encapsulate the suit of the card.
 
-A seperate Deck class creates the instances of the cards and loads each into a list. Users can create a deck, 
-shuffle the cards, draw a card (no replacement), or complete the workout in one-go.
+A seperate Deck class creates the instances of the cards and loads each into a list. By calling on the Deck class, users can create a deck, shuffle the cards, draw a card (no replacement), determine cards left in the deck, or complete the workout in one-go.
 
 
 
