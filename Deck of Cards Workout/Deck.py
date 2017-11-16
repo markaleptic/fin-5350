@@ -27,7 +27,6 @@ class Deck(object):
     else:
       print("No cards remaining! Create a new deck to start another workout")
 
-
   def draw_card(self):
     if self.cards_in_deck() != 0:
       card = self.__arr.pop()
