@@ -1,7 +1,7 @@
 # Deck of Cards Workout Submission
 This is the submission for the Deck of Cards Workout assignment. The deck of cards is modeled after a standard 52-card deck:
 
-![Standard 52-Card Deck](https://github.com/markaleptic/fin-5350/blob/master/Deck%20of%20Cards%20Workout/stdDeck.PNG)
+![Standard 52-Card Deck](https://github.com/markaleptic/fin-5350/blob/master/Notebooks/Deck%20of%20Cards%20Workout/stdDeck.PNG)
 
 Given the parameters of the assignment, Ace is high and represents 11 only and the other face cards represent 10. The workout goes like this:
 1. Shuffle a standard deck
