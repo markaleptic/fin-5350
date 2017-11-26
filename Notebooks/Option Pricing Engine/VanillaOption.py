@@ -69,20 +69,20 @@ def AmericanBinomialPricer(option, optiondata, steps):
   dpu = disc * prob_up
   dpd = disc * prob_down
 
-  Ct = np.zeros(nodes)
-  St = np.zeros(nodes)
+  call_t = np.zeros(nodes)
+  spot_t = np.zeros(nodes)
 
   for i in range(nodes):
-    St[i] = spot * (up ** (steps - i)) * (down ** i)
-    Ct[i] = option.payoff(St[i])
+    spot_t[i] = spot * (up ** (steps - i)) * (down ** i)
+    call_t[i] = option.payoff(spot_t[i])
 
   for i in range((steps - 1), -1, -1):
     for j in range(i+1):
-      Ct[j] = dpu * Ct[j] + dpd * Ct[j+1]
-      St[j] = St[j] / up
-      Ct[j] = np.maximum(Ct[j], option.payoff(St[j]))
+      call_t[j] = dpu * call_t[j] + dpd * call_t[j+1]
+      spot_t[j] = spot_t[j] / up
+      call_t[j] = np.maximum(call_t[j], option.payoff(spot_t[j]))
 
-  return Ct[0]
+  return call_t[0]
 
 
 def NaiveMonteCarloPricer(option, optiondata, replications, time_steps):
