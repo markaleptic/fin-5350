@@ -18,21 +18,21 @@ cdef class VanillaOption:
     def __set__(self, strike):
       self._strike = strike
 
-  cpdef payoff(self, spot):
+  cdef payoff(self, double spot):
     pass
 
 
 cdef class VanillaCallOption(VanillaOption):
   """A concrete class for vanilla call options."""
 
-  cpdef payoff(self, double spot):
+  cdef payoff(self, double spot):
     return np.maximum(spot - self.strike, 0.0)
 
 
 cdef class VanillaPutOption(VanillaOption):
   """A concrete class for vanilla put options."""
 
-  cpdef payoff(self, double spot):
+  cdef payoff(self, double spot):
     return np.maximum(self.strike - spot, 0.0)
 
 
@@ -104,12 +104,21 @@ cdef double NaiveMonteCarloPricer(VanillaOption option, OptionData optiondata, i
   cdef double volatility = optiondata.volatility
   cdef double dividend = optiondata.dividend
   cdef double expiry = option.expiry
-  cdef double H = expiry / (<float>time_steps)
+  cdef unsigned int seed = np.random.randint(low=1, high=100000, size=1)[0]  
+  
+  cdef double[::1] z = np.random.normal(0.0, 1.0, replications)
+  cdef double[::1] spot_t = np.empty(replications, dtype=np.float64)
+  cdef double[::1] payoff_t = np.empty(replications, dtype=np.float64)
 
-  cdef double [:] z = np.random.normal(size = replications)
-  cdef double [:] spot_t = spot * cexp((rate - dividend - 0.5 * volatility * volatility) * H + volatility * csqrt(H) * z)
-  cdef double [:] payoff_t = option.payoff(spot_t)
+  cdef double discount = cexp(-(rate - dividend) * expiry)
+  cdef double nudt = (rate - dividend - 0.5 * volatility * volatility) * expiry
+  cdef double sigdt = volatility * csqrt(expiry)
 
-  cdef double [:] price = payoff_t.mean() * cexp(-rate * H)
+  cdef unsigned int i = 0
+  for i in range(replications):
+    spot_t[i] = spot * cexp(nudt + sigdt * z[i])
+    payoff_t[i] = option.payoff(spot_t[i])
+  
+  cdef double price = np.mean(payoff_t) * discount
 
   return price
